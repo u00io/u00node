@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"github.com/u00io/u00node/mainform"
+)
 
 func main() {
-	fmt.Println("Started")
+	mainform.Run()
 }
