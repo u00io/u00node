@@ -6,10 +6,21 @@ import (
 
 	"github.com/u00io/nuiforms/ui"
 	"github.com/u00io/u00client/u00client"
+	"github.com/u00io/u00node/localstorage"
 )
 
 func Run() {
-	client := u00client.NewClient()
+	var privateKey []byte
+
+	bs, err := localstorage.Read("private.key")
+	if err != nil || len(bs) < 64 {
+		privateKey, _ = u00client.GenerateKeyPair()
+		localstorage.Write("private.key", privateKey)
+	} else {
+		privateKey = bs
+	}
+
+	client := u00client.NewClientWithKey(privateKey)
 	fmt.Println("Client Address:", "https://u00.io/native/"+client.Address())
 
 	c := ui.NewForm()
