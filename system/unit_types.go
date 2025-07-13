@@ -1,38 +1,68 @@
 package system
 
 import (
+	"sort"
+
 	unit00base "github.com/u00io/u00node/unit/unit_00_base"
 	unit01filecontent "github.com/u00io/u00node/unit/unit_01_file_content"
 	unit02currenttime "github.com/u00io/u00node/unit/unit_02_current_time"
 )
 
+type UnitCategory struct {
+	Name        string
+	Description string
+}
+
 type UnitTypeRecord struct {
 	TypeName    string
+	Categories  []string
 	Constructor func() unit00base.IUnit
 }
 
 type UnitsRegistry struct {
-	unitTypes map[string]*UnitTypeRecord
+	UnitCategories []*UnitCategory
+	UnitTypes      map[string]*UnitTypeRecord
 }
 
-func (r *UnitsRegistry) RegisterUnitType(unitType string, constructor func() unit00base.IUnit) {
+func (r *UnitsRegistry) RegisterUnitType(unitType string, constructor func() unit00base.IUnit, categories ...string) {
 	var record UnitTypeRecord
 	record.TypeName = unitType
 	record.Constructor = constructor
-	r.unitTypes[unitType] = &record
+	record.Categories = categories
+	r.UnitTypes[unitType] = &record
 }
 
-var registry UnitsRegistry
+var Registry UnitsRegistry
 
 func init() {
-	registry.unitTypes = make(map[string]*UnitTypeRecord)
-	registry.RegisterUnitType("unit01filecontent", unit01filecontent.New)
-	registry.RegisterUnitType("unit02currenttime", unit02currenttime.New)
+	Registry.UnitTypes = make(map[string]*UnitTypeRecord)
+	Registry.RegisterUnitType("unit01filecontent", unit01filecontent.New, "File Operations", "Content Management")
+	Registry.RegisterUnitType("unit02currenttime", unit02currenttime.New, "Time Management", "Utilities")
+	Registry.UpdateUnitCategories()
 }
 
 func createUnitByType(unitType string) unit00base.IUnit {
-	if record, exists := registry.unitTypes[unitType]; exists {
+	if record, exists := Registry.UnitTypes[unitType]; exists {
 		return record.Constructor()
 	}
 	return nil
+}
+
+func (r *UnitsRegistry) UpdateUnitCategories() {
+	categoriesMap := make(map[string]*UnitCategory)
+	for _, record := range r.UnitTypes {
+		for _, category := range record.Categories {
+			if _, exists := categoriesMap[category]; !exists {
+				categoriesMap[category] = &UnitCategory{Name: category}
+			}
+		}
+	}
+	r.UnitCategories = make([]*UnitCategory, 0, len(categoriesMap))
+	for _, category := range categoriesMap {
+		r.UnitCategories = append(r.UnitCategories, category)
+	}
+
+	sort.Slice(r.UnitCategories, func(i, j int) bool {
+		return r.UnitCategories[i].Name < r.UnitCategories[j].Name
+	})
 }

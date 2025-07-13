@@ -2,6 +2,7 @@ package mainform
 
 import (
 	"github.com/u00io/nuiforms/ui"
+	"github.com/u00io/u00node/addpage"
 	"github.com/u00io/u00node/pages"
 	"github.com/u00io/u00node/system"
 )
@@ -12,7 +13,8 @@ type MainForm struct {
 	topPanel  *ui.Panel
 	tabWidget *ui.TabWidget
 
-	widgetPages *pages.Pages
+	widgetPages   *pages.Pages
+	widgetAddPage *addpage.AddPage
 
 	bottomPanel *ui.Panel
 }
@@ -27,22 +29,17 @@ func NewMainForm() *MainForm {
 	form.topPanel = ui.NewPanel()
 	form.topPanel.SetYExpandable(false)
 	form.topPanel.AddWidgetOnGrid(ui.NewLabel("U00 Node"), 0, 0)
-	btnUpdate := ui.NewButton("Update")
-	btnUpdate.SetOnButtonClick(func(btn *ui.Button) {
-		system.Instance.Test()
-	})
 
-	form.topPanel.AddWidgetOnGrid(btnUpdate, 1, 0)
+	form.topPanel.AddWidgetOnGrid(ui.NewHSpacer(), 1, 0)
 	form.AddWidgetOnGrid(form.topPanel, 0, 0)
 
-	lbl := ui.NewLabel("Settings")
-	lbl.SetYExpandable(true)
+	form.widgetAddPage = addpage.NewAddPage()
 
 	form.widgetPages = pages.NewPages()
 
 	form.tabWidget = ui.NewTabWidget()
 	form.tabWidget.AddPage("Pages", form.widgetPages)
-	form.tabWidget.AddPage("Settings", lbl)
+	form.tabWidget.AddPage("Add Page", form.widgetAddPage)
 	form.AddWidgetOnGrid(form.tabWidget, 0, 1)
 
 	form.bottomPanel = ui.NewPanel()

@@ -4,12 +4,12 @@ go 1.24.0
 
 require (
 	github.com/u00io/gomisc v0.0.1
-	github.com/u00io/nuiforms v0.0.2
+	github.com/u00io/nui v0.0.4
+	github.com/u00io/nuiforms v0.0.6
 	github.com/u00io/u00client v0.0.0-20250607093605-bcac464d3ae3
 )
 
 require (
-	github.com/u00io/nui v0.0.4 // indirect
 	golang.design/x/clipboard v0.7.1 // indirect
 	golang.org/x/exp/shiny v0.0.0-20250606033433-dcc06ee1d476 // indirect
 	golang.org/x/image v0.28.0 // indirect
