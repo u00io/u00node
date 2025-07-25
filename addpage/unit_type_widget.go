@@ -30,12 +30,13 @@ func NewUnitTypeWidget(unitTypeName string) *UnitTypeWidget {
 	c.SetSelected(false)
 	c.SetMouseCursor(nuimouse.MouseCursorPointer)
 
-	c.SetOnMouseDown(func(button nuimouse.MouseButton, x int, y int, mods nuikey.KeyModifiers) {
+	c.SetOnMouseDown(func(button nuimouse.MouseButton, x int, y int, mods nuikey.KeyModifiers) bool {
 		if button == nuimouse.MouseButtonLeft {
 			if c.OnClick != nil {
 				c.OnClick(c.unitTypeName)
 			}
 		}
+		return true
 	})
 
 	return &c

@@ -27,17 +27,19 @@ func NewCategoryWidget(categoryName string) *CategoryWidget {
 	c.SetMaxHeight(60)
 	c.SetSelected(false)
 	c.SetMouseCursor(nuimouse.MouseCursorPointer)
-	c.SetOnMouseDown(func(button nuimouse.MouseButton, x int, y int, mods nuikey.KeyModifiers) {
+	c.SetOnMouseDown(func(button nuimouse.MouseButton, x int, y int, mods nuikey.KeyModifiers) bool {
 		if button == nuimouse.MouseButtonLeft {
 			if c.OnClick != nil {
 				c.OnClick(c.categoryName)
 			}
 		}
+		return true
 	})
-	c.SetOnClick(func(button nuimouse.MouseButton, x, y int) {
+	c.SetOnClick(func(button nuimouse.MouseButton, x, y int) bool {
 		if c.OnClick != nil {
 			c.OnClick(c.categoryName)
 		}
+		return true
 	})
 	return &c
 }
