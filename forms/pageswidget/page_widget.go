@@ -1,4 +1,4 @@
-package pages
+package pageswidget
 
 import (
 	"image/color"

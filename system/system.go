@@ -46,7 +46,7 @@ func (c *System) LoadDefaultConfig() {
 }
 
 func (c *System) Test() {
-	c.client.WriteValue("Test Value")
+	// c.client.WriteValue("Test Value")
 }
 
 func (c *System) thWork() {
@@ -60,7 +60,7 @@ func (c *System) SendValues() {
 	for _, unit := range c.units {
 		value := unit.GetValue("value")
 		if value != "" {
-			c.client.WriteValue(value)
+			c.client.WriteValue(unit.GetKey(), value)
 		}
 	}
 }

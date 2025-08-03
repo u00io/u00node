@@ -1,4 +1,4 @@
-package pages
+package pageswidget
 
 import (
 	"github.com/u00io/nuiforms/ui"
@@ -12,34 +12,39 @@ type Pages struct {
 
 	selectedUnitId string
 
-	panelPages       *ui.Panel
-	panelCurrentPage *ui.Panel
-	contentWidget    *PageContent
+	panelButtons *ui.Panel
+	panelPages   *ui.Panel
+
+	onPageSelected func(unitId string)
 }
 
-func NewPages() *Pages {
+func NewPagesWidget() *Pages {
 	var c Pages
 	c.InitWidget()
 
 	c.SetCellPadding(1)
 
+	c.panelButtons = ui.NewPanel()
+	c.panelButtons.SetYExpandable(false)
+	c.panelButtons.SetBackgroundColor(c.BackgroundColorAccent1())
+	c.AddWidgetOnGrid(c.panelButtons, 0, 0)
+
+	btnAddPage := ui.NewButton("Add Page")
+	c.panelButtons.AddWidgetOnGrid(btnAddPage, 0, 0)
+	c.panelButtons.AddWidgetOnGrid(ui.NewHSpacer(), 1, 0)
+
 	c.panelPages = ui.NewPanel()
 	c.panelPages.SetXExpandable(false)
 	c.panelPages.SetYExpandable(true)
-	c.AddWidgetOnGrid(c.panelPages, 0, 0)
-
-	c.panelCurrentPage = ui.NewPanel()
-	c.AddWidgetOnGrid(c.panelCurrentPage, 1, 0)
-
-	c.panelCurrentPage.SetXExpandable(true)
-	c.panelCurrentPage.SetYExpandable(true)
-
-	c.contentWidget = NewPageContent()
-	c.panelCurrentPage.AddWidgetOnGrid(c.contentWidget, 0, 0)
+	c.AddWidgetOnGrid(c.panelPages, 0, 1)
 
 	c.AddTimer(500, c.timerUpdate)
 
 	return &c
+}
+
+func (c *Pages) SetOnPageSelected(callback func(unitId string)) {
+	c.onPageSelected = callback
 }
 
 func (c *Pages) loadPages() {
@@ -75,5 +80,7 @@ func (c *Pages) SelectPage(unitId string) {
 			pageWidget.SetSelected(pageWidget.id == unitId)
 		}
 	}
-	c.contentWidget.SetUnitId(unitId)
+	if c.onPageSelected != nil {
+		c.onPageSelected(unitId)
+	}
 }

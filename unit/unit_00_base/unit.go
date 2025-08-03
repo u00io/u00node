@@ -23,6 +23,7 @@ type IUnit interface {
 	Start()
 	SetConfig(config map[string]string)
 	GetId() string
+	GetKey() *utils.Key
 	GetType() string
 	GetValue(key string) string
 	SetValue(key, value string)
@@ -41,6 +42,12 @@ func (c *Unit) GetId() string {
 	c.mtx.Lock()
 	defer c.mtx.Unlock()
 	return c.key.String()
+}
+
+func (c *Unit) GetKey() *utils.Key {
+	c.mtx.Lock()
+	defer c.mtx.Unlock()
+	return c.key
 }
 
 func (c *Unit) SetType(tp string) {

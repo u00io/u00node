@@ -6,6 +6,7 @@ import (
 
 	"github.com/u00io/u00client/u00client"
 	"github.com/u00io/u00node/localstorage"
+	"github.com/u00io/u00node/utils"
 )
 
 type U00 struct {
@@ -30,6 +31,7 @@ func (c *U00) Run() {
 	fmt.Println("Client Address:", "https://u00.io/native/"+c.client.Address())
 }
 
-func (c *U00) WriteValue(value string) {
-	c.client.WriteValue("MyItem", time.Now(), value)
+func (c *U00) WriteValue(key *utils.Key, value string) {
+	cl := u00client.NewClientWithKey(key.PrivateKey)
+	cl.WriteValue(key.String(), time.Now(), value)
 }

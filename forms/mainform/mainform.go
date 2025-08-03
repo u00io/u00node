@@ -2,52 +2,61 @@ package mainform
 
 import (
 	"github.com/u00io/nuiforms/ui"
-	"github.com/u00io/u00node/forms/addpage"
-	"github.com/u00io/u00node/forms/pages"
+	"github.com/u00io/u00node/forms/pagedetailswidget"
+	"github.com/u00io/u00node/forms/pageswidget"
 	"github.com/u00io/u00node/system"
 )
 
 type MainForm struct {
 	ui.Widget
-
-	topPanel  *ui.Panel
-	tabWidget *ui.TabWidget
-
-	widgetPages   *pages.Pages
-	widgetAddPage *addpage.AddPage
-
-	bottomPanel *ui.Panel
+	topPanel          *ui.Panel
+	centerPanel       *ui.Panel
+	pagesWidget       *pageswidget.Pages
+	pageDetailsWidget *pagedetailswidget.PageDetailsWidget
+	bottomPanel       *ui.Panel
 }
 
 func NewMainForm() *MainForm {
 	system.Instance = system.NewSystem()
 	system.Instance.Start()
 
-	var form MainForm
-	form.InitWidget()
+	var c MainForm
+	c.InitWidget()
 
-	form.topPanel = ui.NewPanel()
-	form.topPanel.SetYExpandable(false)
-	//form.topPanel.AddWidgetOnGrid(ui.NewLabel("U00 Node"), 0, 0)
+	// Top panel
+	c.topPanel = ui.NewPanel()
+	c.topPanel.SetYExpandable(false)
+	c.topPanel.AddWidgetOnGrid(ui.NewHSpacer(), 1, 0)
+	c.AddWidgetOnGrid(c.topPanel, 0, 0)
 
-	form.topPanel.AddWidgetOnGrid(ui.NewHSpacer(), 1, 0)
-	form.AddWidgetOnGrid(form.topPanel, 0, 0)
+	// Center panel
+	c.centerPanel = ui.NewPanel()
+	c.centerPanel.SetYExpandable(true)
+	c.AddWidgetOnGrid(c.centerPanel, 0, 1)
 
-	form.widgetAddPage = addpage.NewAddPage()
+	// Pages widget
+	c.pagesWidget = pageswidget.NewPagesWidget()
+	c.centerPanel.AddWidgetOnGrid(c.pagesWidget, 0, 0)
+	c.pagesWidget.SetXExpandable(false)
+	c.pagesWidget.SetYExpandable(true)
+	c.pagesWidget.SetMaxWidth(300)
+	c.pagesWidget.SetOnPageSelected(func(unitId string) {
+		c.pageDetailsWidget.SetUnitId(unitId)
+	})
 
-	form.widgetPages = pages.NewPages()
+	// Content widget
+	c.pageDetailsWidget = pagedetailswidget.NewPageDetailsWidget()
+	c.centerPanel.AddWidgetOnGrid(c.pageDetailsWidget, 1, 0)
+	c.pageDetailsWidget.SetXExpandable(true)
+	c.pageDetailsWidget.SetYExpandable(true)
 
-	form.tabWidget = ui.NewTabWidget()
-	form.tabWidget.AddPage("Pages", form.widgetPages)
-	form.tabWidget.AddPage("Add Page", form.widgetAddPage)
-	form.AddWidgetOnGrid(form.tabWidget, 0, 1)
+	// Bottom panel
+	c.bottomPanel = ui.NewPanel()
+	c.bottomPanel.SetYExpandable(false)
+	c.bottomPanel.AddWidgetOnGrid(ui.NewLabel("Powered by U00.io"), 0, 0)
+	c.AddWidgetOnGrid(c.bottomPanel, 0, 2)
 
-	form.bottomPanel = ui.NewPanel()
-	form.bottomPanel.SetYExpandable(false)
-	form.bottomPanel.AddWidgetOnGrid(ui.NewLabel("Powered by U00.io"), 0, 0)
-	form.AddWidgetOnGrid(form.bottomPanel, 0, 2)
-
-	return &form
+	return &c
 }
 
 func Run() {

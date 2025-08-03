@@ -1,19 +1,19 @@
-package pages
+package pagedetailswidget
 
 import (
 	"github.com/u00io/nuiforms/ui"
 	"github.com/u00io/u00node/system"
 )
 
-type PageContent struct {
+type PageContentWidget struct {
 	ui.Widget
 
 	unitId string
 	value  string
 }
 
-func NewPageContent() *PageContent {
-	var c PageContent
+func NewPageContentWidget() *PageContentWidget {
+	var c PageContentWidget
 	c.InitWidget()
 	c.SetPanelPadding(1)
 	c.SetBackgroundColor(c.BackgroundColorAccent1())
@@ -23,13 +23,13 @@ func NewPageContent() *PageContent {
 	return &c
 }
 
-func (c *PageContent) SetUnitId(id string) {
+func (c *PageContentWidget) SetUnitId(id string) {
 	c.unitId = id
 	c.timerUpdate()
 	ui.UpdateMainForm()
 }
 
-func (c *PageContent) draw(ctx *ui.Canvas) {
+func (c *PageContentWidget) draw(ctx *ui.Canvas) {
 	ctx.SetColor(c.Color())
 	ctx.SetFontFamily(c.FontFamily())
 	ctx.SetFontSize(c.FontSize())
@@ -38,7 +38,7 @@ func (c *PageContent) draw(ctx *ui.Canvas) {
 	ctx.DrawText(0, 0, c.Width(), c.Height(), c.value)
 }
 
-func (c *PageContent) timerUpdate() {
+func (c *PageContentWidget) timerUpdate() {
 	state := system.Instance.GetState()
 	for _, unit := range state.Units {
 		if unit.Id == c.unitId {
