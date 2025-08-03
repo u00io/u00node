@@ -68,10 +68,16 @@ func (c *System) SendValues() {
 func (c *System) GetState() State {
 	var state State
 	for _, unit := range c.units {
+		typeDisplayName := ""
+		if record, exists := Registry.UnitTypes[unit.GetType()]; exists {
+			typeDisplayName = record.TypeDisplayName
+		}
+
 		unitState := UnitState{
-			Id:       unit.GetId(),
-			UnitType: unit.GetType(),
-			Value:    unit.GetValue("value"),
+			Id:                  unit.GetId(),
+			UnitType:            unit.GetType(),
+			UnitTypeDisplayName: typeDisplayName,
+			Value:               unit.GetValue("value"),
 		}
 		state.Units = append(state.Units, unitState)
 	}

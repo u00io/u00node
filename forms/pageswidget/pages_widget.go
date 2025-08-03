@@ -52,7 +52,7 @@ func (c *Pages) loadPages() {
 	if len(state.Units) != c.loadedPagesCount {
 		c.panelPages.RemoveAllWidgets()
 		for i, page := range state.Units {
-			pageWidget := NewPageWidget(page.UnitType, page.Id)
+			pageWidget := NewPageWidget(page.UnitType, page.UnitTypeDisplayName, page.Id)
 			pageWidget.OnClick = func(unitId string) {
 				c.SelectPage(unitId)
 			}

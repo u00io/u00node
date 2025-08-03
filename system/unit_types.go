@@ -14,7 +14,9 @@ type UnitCategory struct {
 }
 
 type UnitTypeRecord struct {
-	TypeName    string
+	TypeName        string
+	TypeDisplayName string
+
 	Categories  []string
 	Constructor func() unit00base.IUnit
 }
@@ -24,9 +26,10 @@ type UnitsRegistry struct {
 	UnitTypes      map[string]*UnitTypeRecord
 }
 
-func (r *UnitsRegistry) RegisterUnitType(unitType string, constructor func() unit00base.IUnit, categories ...string) {
+func (r *UnitsRegistry) RegisterUnitType(unitType string, displayName string, constructor func() unit00base.IUnit, categories ...string) {
 	var record UnitTypeRecord
 	record.TypeName = unitType
+	record.TypeDisplayName = displayName
 	record.Constructor = constructor
 	record.Categories = categories
 	r.UnitTypes[unitType] = &record
@@ -36,8 +39,8 @@ var Registry UnitsRegistry
 
 func init() {
 	Registry.UnitTypes = make(map[string]*UnitTypeRecord)
-	Registry.RegisterUnitType("unit01filecontent", unit01filecontent.New, "File Operations", "Content Management")
-	Registry.RegisterUnitType("unit02currenttime", unit02currenttime.New, "Time Management", "Utilities")
+	Registry.RegisterUnitType("unit01filecontent", "File Content", unit01filecontent.New, "File Operations", "Content Management")
+	Registry.RegisterUnitType("unit02currenttime", "Current Time", unit02currenttime.New, "Time Management", "Utilities")
 	Registry.UpdateUnitCategories()
 }
 

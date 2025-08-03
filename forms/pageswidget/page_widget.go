@@ -10,16 +10,19 @@ import (
 
 type PageWidget struct {
 	ui.Widget
-	id           string
-	categoryName string
-	selected     bool
-	OnClick      func(clickedCategory string)
+	id string
+
+	categoryName        string
+	categoryDisplayName string
+
+	selected bool
+	OnClick  func(clickedCategory string)
 
 	lblCategory *ui.Label
 	lblUnitId   *ui.Label
 }
 
-func NewPageWidget(categoryName string, id string) *PageWidget {
+func NewPageWidget(categoryName string, categoryDisplayName string, id string) *PageWidget {
 	var c PageWidget
 	c.InitWidget()
 
@@ -27,8 +30,9 @@ func NewPageWidget(categoryName string, id string) *PageWidget {
 
 	c.id = id
 	c.categoryName = categoryName
+	c.categoryDisplayName = categoryDisplayName
 
-	c.lblCategory = ui.NewLabel(categoryName)
+	c.lblCategory = ui.NewLabel(categoryDisplayName)
 	c.lblCategory.SetMouseCursor(nuimouse.MouseCursorPointer)
 	c.lblCategory.SetOnMouseDown(func(button nuimouse.MouseButton, x int, y int, mods nuikey.KeyModifiers) bool {
 		if button == nuimouse.MouseButtonLeft {
@@ -38,7 +42,15 @@ func NewPageWidget(categoryName string, id string) *PageWidget {
 	})
 	c.AddWidgetOnGrid(c.lblCategory, 0, 0)
 
-	c.lblUnitId = ui.NewLabel(id)
+	unitIdShort := id
+	// input: 1234-------3240
+	// format: 0x1234...3240
+	if len(id) == 64 {
+		unitIdShort = "0x" + id[:4] + "..." + id[len(id)-4:]
+	}
+
+	c.lblUnitId = ui.NewLabel(unitIdShort)
+	c.lblUnitId.SetForegroundColor(color.RGBA{R: 150, G: 150, B: 150, A: 255})
 	c.lblUnitId.SetMouseCursor(nuimouse.MouseCursorPointer)
 	c.lblUnitId.SetOnMouseDown(func(button nuimouse.MouseButton, x int, y int, mods nuikey.KeyModifiers) bool {
 		if button == nuimouse.MouseButtonLeft {
@@ -72,12 +84,12 @@ func (c *PageWidget) Click() {
 func (c *PageWidget) SetSelected(selected bool) {
 	c.selected = selected
 	if selected {
-		backColor := c.BackgroundColorAccent1()
+		backColor := c.BackgroundColorAccent2()
 		c.SetBackgroundColor(backColor)
 		c.lblCategory.SetBackgroundColor(backColor)
 		c.lblUnitId.SetBackgroundColor(backColor)
 	} else {
-		var backColor color.Color
+		backColor := c.BackgroundColorAccent1()
 		c.SetBackgroundColor(backColor)
 		c.lblCategory.SetBackgroundColor(backColor)
 		c.lblUnitId.SetBackgroundColor(backColor)

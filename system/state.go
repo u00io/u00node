@@ -1,9 +1,12 @@
 package system
 
 type UnitState struct {
-	Id       string
-	UnitType string
-	Value    string
+	Id string
+
+	UnitType            string
+	UnitTypeDisplayName string
+
+	Value string
 }
 
 type State struct {
