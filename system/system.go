@@ -41,6 +41,8 @@ func (c *System) LoadDefaultConfig() {
 	u01 := createUnitByType("unit01filecontent")
 	c.units = append(c.units, u01)
 
+	u02 := createUnitByType("unit02currenttime")
+	c.units = append(c.units, u02)
 }
 
 func (c *System) Test() {
@@ -61,4 +63,17 @@ func (c *System) SendValues() {
 			c.client.WriteValue(value)
 		}
 	}
+}
+
+func (c *System) GetState() State {
+	var state State
+	for _, unit := range c.units {
+		unitState := UnitState{
+			Id:       unit.GetId(),
+			UnitType: unit.GetType(),
+			Value:    unit.GetValue("value"),
+		}
+		state.Units = append(state.Units, unitState)
+	}
+	return state
 }

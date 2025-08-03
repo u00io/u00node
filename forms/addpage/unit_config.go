@@ -19,6 +19,9 @@ func NewUnitConfig() *UnitConfig {
 	c.lvItems.SetColumnWidth(1, 300)
 	c.lvItems.SetColumnName(0, "Property")
 	c.lvItems.SetColumnName(1, "Value")
+	c.lvItems.SetEditTriggerEnter(true)
+	c.lvItems.SetEditTriggerF2(true)
+	c.lvItems.SetEditTriggerDoubleClick(true)
 	c.AddWidgetOnGrid(c.lvItems, 0, 0)
 	return &c
 }

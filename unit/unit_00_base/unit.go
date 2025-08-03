@@ -5,10 +5,13 @@ import (
 	"time"
 
 	"github.com/u00io/gomisc/logger"
+	"github.com/u00io/u00node/utils"
 )
 
 type Unit struct {
 	mtx     sync.Mutex
+	key     *utils.Key
+	tp      string
 	started bool
 	stoping bool
 	config  map[string]string
@@ -19,6 +22,8 @@ type Unit struct {
 type IUnit interface {
 	Start()
 	SetConfig(config map[string]string)
+	GetId() string
+	GetType() string
 	GetValue(key string) string
 	SetValue(key, value string)
 	Stop()
@@ -29,6 +34,25 @@ func (c *Unit) Init(iUnit IUnit) {
 	c.config = make(map[string]string)
 	c.values = make(map[string]string)
 	c.iUnit = iUnit
+	c.key = utils.NewKey()
+}
+
+func (c *Unit) GetId() string {
+	c.mtx.Lock()
+	defer c.mtx.Unlock()
+	return c.key.String()
+}
+
+func (c *Unit) SetType(tp string) {
+	c.mtx.Lock()
+	defer c.mtx.Unlock()
+	c.tp = tp
+}
+
+func (c *Unit) GetType() string {
+	c.mtx.Lock()
+	defer c.mtx.Unlock()
+	return c.tp
 }
 
 func (c *Unit) SetConfig(config map[string]string) {

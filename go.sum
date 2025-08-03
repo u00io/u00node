@@ -1,9 +1,11 @@
+github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 h1:zYyBkD/k9seD2A7fsi6Oo2LfFZAehjjQMERAvZLEDnQ=
+github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646/go.mod h1:jpp1/29i3P1S/RLdc7JQKbRpFeM1dOBd8T9ki5s+AY8=
 github.com/u00io/gomisc v0.0.1 h1:561Nvmfw4YBigzFgjXK0r6nDzrFJRp9ZECFpAbmjyMw=
 github.com/u00io/gomisc v0.0.1/go.mod h1:2d4xEEOPga+7A1d4ukJ8N3JC+Ji4YbSa9m8amA/wKdI=
 github.com/u00io/nui v0.0.4 h1:O17kW3EIf2+qKyg0cH/hCCfFttTDlVbmOZ2stLWf13Y=
 github.com/u00io/nui v0.0.4/go.mod h1:02NXOqV2GsvEaJGiwX99u7wQBxm9UbW+OgXVmM4u0HM=
-github.com/u00io/nuiforms v0.0.7 h1:T6FqZ9ijTMuXb6R0H/C0fg9u+Z5f3YW4ekdiGtNifAA=
-github.com/u00io/nuiforms v0.0.7/go.mod h1:4gS8Li27LKtdW9rC0cgfwbSmPA5Cp5WBE7Kc8sneXik=
+github.com/u00io/nuiforms v0.0.8 h1:C2ggygydoyHqkSNredYowYC80W+SLVF7Alc34epChyc=
+github.com/u00io/nuiforms v0.0.8/go.mod h1:JwmHgzlV4pvrufPQFW9ODi/Jd5bEBWmbCK/PGLZJQBs=
 github.com/u00io/u00client v0.0.0-20250607093605-bcac464d3ae3 h1:pjq9OqrOHIk6147McRhH3uFO6pQmtP51Tzo3ltWLs1w=
 github.com/u00io/u00client v0.0.0-20250607093605-bcac464d3ae3/go.mod h1:A42AcBoheXR0OUqXdfmylxqTEf6oOfH7+M9cJJYBqvA=
 golang.design/x/clipboard v0.7.1 h1:OEG3CmcYRBNnRwpDp7+uWLiZi3hrMRJpE9JkkkYtz2c=
