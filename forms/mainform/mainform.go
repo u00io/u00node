@@ -2,18 +2,18 @@ package mainform
 
 import (
 	"github.com/u00io/nuiforms/ui"
-	"github.com/u00io/u00node/forms/pagedetailswidget"
+	"github.com/u00io/u00node/forms/contentwidget"
 	"github.com/u00io/u00node/forms/pageswidget"
 	"github.com/u00io/u00node/system"
 )
 
 type MainForm struct {
 	ui.Widget
-	topPanel          *ui.Panel
-	centerPanel       *ui.Panel
-	pagesWidget       *pageswidget.Pages
-	pageDetailsWidget *pagedetailswidget.PageDetailsWidget
-	bottomPanel       *ui.Panel
+	topPanel      *ui.Panel
+	centerPanel   *ui.Panel
+	pagesWidget   *pageswidget.Pages
+	contentWidget *contentwidget.ContentWidget
+	bottomPanel   *ui.Panel
 }
 
 func NewMainForm() *MainForm {
@@ -22,6 +22,8 @@ func NewMainForm() *MainForm {
 
 	var c MainForm
 	c.InitWidget()
+	ui.MainForm.LayoutingBlockPush()
+	defer ui.MainForm.LayoutingBlockPop()
 
 	// Top panel
 	c.topPanel = ui.NewPanel()
@@ -40,15 +42,21 @@ func NewMainForm() *MainForm {
 	c.pagesWidget.SetXExpandable(false)
 	c.pagesWidget.SetYExpandable(true)
 	c.pagesWidget.SetMaxWidth(300)
-	c.pagesWidget.SetOnPageSelected(func(unitId string) {
-		c.pageDetailsWidget.SetUnitId(unitId)
+	c.pagesWidget.SetOnPageSelected(func(tp, unitId string) {
+		c.contentWidget.SetContent(tp, unitId)
 	})
 
+	separator := ui.NewPanel()
+	separator.SetMinWidth(6)
+	separator.SetAutoFillBackground(true)
+	separator.SetBackgroundColor(c.BackgroundColorAccent1())
+	c.centerPanel.AddWidgetOnGrid(separator, 1, 0)
+
 	// Content widget
-	c.pageDetailsWidget = pagedetailswidget.NewPageDetailsWidget()
-	c.centerPanel.AddWidgetOnGrid(c.pageDetailsWidget, 1, 0)
-	c.pageDetailsWidget.SetXExpandable(true)
-	c.pageDetailsWidget.SetYExpandable(true)
+	c.contentWidget = contentwidget.NewContentWidget()
+	c.centerPanel.AddWidgetOnGrid(c.contentWidget, 2, 0)
+	c.contentWidget.SetXExpandable(true)
+	c.contentWidget.SetYExpandable(true)
 
 	// Bottom panel
 	c.bottomPanel = ui.NewPanel()
@@ -67,40 +75,4 @@ func Run() {
 	form.Panel().AddWidgetOnGrid(NewMainForm(), 0, 0)
 
 	form.Exec()
-
-	/*sendValue := func() {
-		client.WriteValue("MyItem", time.Now(), time.Now().Format("2006-01-02 15:04:05.000000"))
-	}
-
-	{
-		btnSend := ui.NewButton()
-		btnSend.SetPosition(10, 10)
-		btnSend.SetSize(100, 30)
-		btnSend.SetProp("text", "Send")
-		btnSend.SetProp("onClick", func() {
-			sendValue()
-		})
-		c.Panel().AddWidget(btnSend)
-	}
-
-	{
-		btnOpenUrl := ui.NewButton()
-		btnOpenUrl.SetPosition(120, 10)
-		btnOpenUrl.SetSize(100, 30)
-		btnOpenUrl.SetProp("text", "Open URL")
-		btnOpenUrl.SetProp("onClick", func() {
-			err := openURL("https://u00.io/native/" + client.Address())
-			if err != nil {
-				fmt.Println("Error opening URL:", err)
-			}
-		})
-		c.Panel().AddWidget(btnOpenUrl)
-	}
-
-	{
-		c.AddTimer(1000, func() {
-			fmt.Println("Current Time:", time.Now().Format("2006-01-02 15:04:05.000000"))
-			sendValue()
-		})
-	}*/
 }

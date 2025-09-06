@@ -18,9 +18,18 @@ type CategoryWidget struct {
 func NewCategoryWidget(categoryName string) *CategoryWidget {
 	var c CategoryWidget
 	c.InitWidget()
+	c.SetAutoFillBackground(true)
 	c.categoryName = categoryName
 	lbl := ui.NewLabel(categoryName)
 	lbl.SetMouseCursor(nuimouse.MouseCursorPointer)
+	lbl.SetOnMouseDown(func(button nuimouse.MouseButton, x int, y int, mods nuikey.KeyModifiers) bool {
+		if button == nuimouse.MouseButtonLeft {
+			if c.OnClick != nil {
+				c.OnClick(c.categoryName)
+			}
+		}
+		return true
+	})
 	c.AddWidgetOnGrid(lbl, 0, 0)
 	c.SetYExpandable(false)
 	c.SetMinHeight(60)
@@ -32,12 +41,6 @@ func NewCategoryWidget(categoryName string) *CategoryWidget {
 			if c.OnClick != nil {
 				c.OnClick(c.categoryName)
 			}
-		}
-		return true
-	})
-	c.SetOnClick(func(button nuimouse.MouseButton, x, y int) bool {
-		if c.OnClick != nil {
-			c.OnClick(c.categoryName)
 		}
 		return true
 	})

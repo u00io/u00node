@@ -8,7 +8,7 @@ import (
 	"github.com/u00io/nuiforms/ui"
 )
 
-type PageWidget struct {
+type AppPageWidget struct {
 	ui.Widget
 	id string
 
@@ -22,12 +22,12 @@ type PageWidget struct {
 	lblUnitId   *ui.Label
 }
 
-func NewPageWidget(categoryName string, categoryDisplayName string, id string) *PageWidget {
-	var c PageWidget
+func NewAppPageWidget(categoryName string, categoryDisplayName string, id string) *AppPageWidget {
+	var c AppPageWidget
 	c.InitWidget()
+	c.SetAutoFillBackground(true)
 
 	c.SetPanelPadding(1)
-	c.SetAutoFillBackground(true)
 
 	c.id = id
 	c.categoryName = categoryName
@@ -63,8 +63,8 @@ func NewPageWidget(categoryName string, categoryDisplayName string, id string) *
 
 	c.SetYExpandable(false)
 	c.SetMinWidth(300)
-	c.SetMinHeight(120)
-	c.SetMaxHeight(120)
+	c.SetMinHeight(60)
+	c.SetMaxHeight(60)
 	c.SetSelected(false)
 	c.SetMouseCursor(nuimouse.MouseCursorPointer)
 	c.SetOnMouseDown(func(button nuimouse.MouseButton, x int, y int, mods nuikey.KeyModifiers) bool {
@@ -76,13 +76,13 @@ func NewPageWidget(categoryName string, categoryDisplayName string, id string) *
 	return &c
 }
 
-func (c *PageWidget) Click() {
+func (c *AppPageWidget) Click() {
 	if c.OnClick != nil {
 		c.OnClick(c.id)
 	}
 }
 
-func (c *PageWidget) SetSelected(selected bool) {
+func (c *AppPageWidget) SetSelected(selected bool) {
 	c.selected = selected
 	if selected {
 		backColor := c.BackgroundColorAccent2()
@@ -97,9 +97,9 @@ func (c *PageWidget) SetSelected(selected bool) {
 	}
 }
 
-func (c *PageWidget) IsSelected() bool {
+func (c *AppPageWidget) IsSelected() bool {
 	return c.selected
 }
 
-func (c *PageWidget) UpdateData() {
+func (c *AppPageWidget) UpdateData() {
 }

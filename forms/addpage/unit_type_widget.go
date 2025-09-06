@@ -20,10 +20,20 @@ type UnitTypeWidget struct {
 func NewUnitTypeWidget(unitTypeName string) *UnitTypeWidget {
 	var c UnitTypeWidget
 	c.InitWidget()
+	c.SetAutoFillBackground(true)
 	c.unitTypeName = unitTypeName
 
 	lbl := ui.NewLabel(unitTypeName)
 	lbl.SetMouseCursor(nuimouse.MouseCursorPointer)
+	lbl.SetOnMouseDown(func(button nuimouse.MouseButton, x int, y int, mods nuikey.KeyModifiers) bool {
+		if button == nuimouse.MouseButtonLeft {
+			if c.OnClick != nil {
+				c.OnClick(c.unitTypeName)
+			}
+		}
+		return true
+	})
+
 	c.AddWidgetOnGrid(lbl, 0, 0)
 	c.SetMinHeight(200)
 	c.SetMaxHeight(200)

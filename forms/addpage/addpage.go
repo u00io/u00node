@@ -95,6 +95,11 @@ func (c *AddPage) SelectUnitType(unitType string) {
 }
 
 func (c *AddPage) loadCategories() {
+	ui.MainForm.UpdateBlockPush()
+	defer ui.MainForm.UpdateBlockPop()
+	ui.MainForm.LayoutingBlockPush()
+	defer ui.MainForm.LayoutingBlockPop()
+
 	c.panelCategories.RemoveAllWidgets()
 	categories := system.Registry.UnitCategories
 
@@ -115,6 +120,11 @@ func (c *AddPage) loadCategories() {
 }
 
 func (c *AddPage) loadUnitTypes() {
+	ui.MainForm.UpdateBlockPush()
+	defer ui.MainForm.UpdateBlockPop()
+	ui.MainForm.LayoutingBlockPush()
+	defer ui.MainForm.LayoutingBlockPop()
+
 	c.SelectUnitType("")
 	c.panelUnitTypes.RemoveAllWidgets()
 	unitTypes := system.Registry.UnitTypes

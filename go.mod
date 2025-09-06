@@ -5,7 +5,7 @@ go 1.24.0
 require (
 	github.com/u00io/gomisc v0.0.1
 	github.com/u00io/nui v0.0.4
-	github.com/u00io/nuiforms v0.0.10
+	github.com/u00io/nuiforms v0.0.11
 	github.com/u00io/u00client v0.0.0-20250607093605-bcac464d3ae3
 )
 
@@ -17,4 +17,8 @@ require (
 	golang.org/x/mobile v0.0.0-20250606033058-a2a15c67f36f // indirect
 	golang.org/x/sys v0.33.0 // indirect
 	golang.org/x/text v0.26.0 // indirect
+)
+
+replace (
+	github.com/u00io/nuiforms => ../nuiforms
 )

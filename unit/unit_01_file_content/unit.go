@@ -3,7 +3,6 @@ package unit01filecontent
 import (
 	"fmt"
 
-	"github.com/u00io/gomisc/logger"
 	unit00base "github.com/u00io/u00node/unit/unit_00_base"
 )
 
@@ -21,7 +20,7 @@ func New() unit00base.IUnit {
 }
 
 func (c *Unit01FileContent) Tick() {
-	logger.Println("Unit01FileContent Tick")
+	//logger.Println("Unit01FileContent Tick")
 	c.SetValue("value", "File Content: "+fmt.Sprint(c.counter))
 	c.counter++
 }
