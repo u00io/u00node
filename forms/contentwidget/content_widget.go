@@ -18,7 +18,7 @@ func NewContentWidget() *ContentWidget {
 	c.panelContent = ui.NewPanel()
 	c.panelContent.SetXExpandable(true)
 	c.panelContent.SetYExpandable(true)
-	c.AddWidgetOnGrid(c.panelContent, 0, 1)
+	c.AddWidgetOnGrid(c.panelContent, 1, 0)
 
 	c.SetPanelPadding(1)
 	c.SetBackgroundColor(c.BackgroundColorAccent1())

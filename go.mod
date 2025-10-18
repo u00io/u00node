@@ -4,7 +4,7 @@ go 1.24.0
 
 require (
 	github.com/u00io/gomisc v0.0.1
-	github.com/u00io/nui v0.0.4
+	github.com/u00io/nui v0.0.5
 	github.com/u00io/nuiforms v0.0.11
 	github.com/u00io/u00client v0.0.0-20250607093605-bcac464d3ae3
 )
@@ -19,6 +19,4 @@ require (
 	golang.org/x/text v0.26.0 // indirect
 )
 
-replace (
-	github.com/u00io/nuiforms => ../nuiforms
-)
+replace github.com/u00io/nuiforms => ../nuiforms

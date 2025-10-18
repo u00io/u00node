@@ -41,7 +41,7 @@ func NewAddPage() *AddPage {
 	c.panelUnitTypes.SetMaxWidth(300)
 	c.panelUnitTypes.SetAllowScroll(true, true)
 	c.panelUnitTypes.SetYExpandable(true)
-	c.AddWidgetOnGrid(c.panelUnitTypes, 1, 0)
+	c.AddWidgetOnGrid(c.panelUnitTypes, 0, 1)
 
 	c.panelConfig = ui.NewPanel()
 	c.panelConfig.SetBackgroundColor(color.RGBA{R: 20, G: 20, B: 20, A: 255})
@@ -49,8 +49,8 @@ func NewAddPage() *AddPage {
 	c.panelConfig.SetYExpandable(true)
 	configWidget := NewUnitConfig()
 	configWidget.SetMinWidth(300)
-	c.panelConfig.AddWidgetOnGrid(configWidget, 0, 1)
-	c.AddWidgetOnGrid(c.panelConfig, 2, 0)
+	c.panelConfig.AddWidgetOnGrid(configWidget, 1, 0)
+	c.AddWidgetOnGrid(c.panelConfig, 0, 2)
 
 	c.panelConfigButtons = ui.NewPanel()
 	c.panelConfigButtons.SetBackgroundColor(color.RGBA{R: 20, G: 20, B: 20, A: 255})
@@ -58,8 +58,8 @@ func NewAddPage() *AddPage {
 	c.panelConfigButtons.SetYExpandable(false)
 	c.panelConfigButtons.AddWidgetOnGrid(ui.NewButton("Save"), 0, 0)
 	c.lblSelectedUnitType = ui.NewLabel("Selected Unit Type: None")
-	c.panelConfigButtons.AddWidgetOnGrid(c.lblSelectedUnitType, 1, 0)
-	c.panelConfigButtons.AddWidgetOnGrid(ui.NewHSpacer(), 2, 0)
+	c.panelConfigButtons.AddWidgetOnGrid(c.lblSelectedUnitType, 0, 1)
+	c.panelConfigButtons.AddWidgetOnGrid(ui.NewHSpacer(), 0, 2)
 	c.panelConfigButtons.SetMinHeight(120)
 
 	c.panelConfig.AddWidgetOnGrid(c.panelConfigButtons, 0, 0)
@@ -107,14 +107,14 @@ func (c *AddPage) loadCategories() {
 	widgetAll.OnClick = func(clickedCategory string) {
 		c.SelectCategory("All")
 	}
-	c.panelCategories.AddWidgetOnGrid(widgetAll, 0, c.panelCategories.NextGridY())
+	c.panelCategories.AddWidgetOnGrid(widgetAll, c.panelCategories.NextGridRow(), 0)
 
 	for _, category := range categories {
 		widget := NewCategoryWidget(category.Name)
 		widget.OnClick = func(clickedCategory string) {
 			c.SelectCategory(clickedCategory)
 		}
-		c.panelCategories.AddWidgetOnGrid(widget, 0, c.panelCategories.NextGridY())
+		c.panelCategories.AddWidgetOnGrid(widget, c.panelCategories.NextGridRow(), 0)
 	}
 	//c.panelCategories.AddWidgetOnGrid(ui.NewVSpacer(), 0, c.panelCategories.NextGridY())
 }
@@ -148,7 +148,7 @@ func (c *AddPage) loadUnitTypes() {
 		widget.OnClick = func(clickedItem string) {
 			c.SelectUnitType(clickedItem)
 		}
-		c.panelUnitTypes.AddWidgetOnGrid(widget, 0, c.panelUnitTypes.NextGridY())
+		c.panelUnitTypes.AddWidgetOnGrid(widget, c.panelUnitTypes.NextGridRow(), 0)
 	}
 	//c.panelRight.AddWidgetOnGrid(ui.NewVSpacer(), 0, c.panelRight.NextGridY())
 }

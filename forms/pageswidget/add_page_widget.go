@@ -59,7 +59,7 @@ func NewAppPageWidget(categoryName string, categoryDisplayName string, id string
 		}
 		return true
 	})
-	c.AddWidgetOnGrid(c.lblUnitId, 0, 1)
+	c.AddWidgetOnGrid(c.lblUnitId, 1, 0)
 
 	c.SetYExpandable(false)
 	c.SetMinWidth(300)

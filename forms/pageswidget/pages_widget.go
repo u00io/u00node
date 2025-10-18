@@ -31,7 +31,7 @@ func NewPagesWidget() *Pages {
 	c.panelPages.SetXExpandable(false)
 	c.panelPages.SetYExpandable(true)
 	c.panelPages.SetAllowScroll(false, true)
-	c.AddWidgetOnGrid(c.panelPages, 0, 1)
+	c.AddWidgetOnGrid(c.panelPages, 1, 0)
 
 	c.AddTimer(500, c.timerUpdate)
 
@@ -63,7 +63,7 @@ func (c *Pages) loadPages() {
 			pageWidget.OnClick = func(unitId string) {
 				c.SelectPage("page", unitId)
 			}
-			c.panelPages.AddWidgetOnGrid(pageWidget, 0, c.panelPages.NextGridY())
+			c.panelPages.AddWidgetOnGrid(pageWidget, c.panelPages.NextGridRow(), 0)
 		}
 		c.loadedPagesCount = len(state.Units)
 	}

@@ -37,18 +37,18 @@ func NewPageDetailsWidget() *PageDetailsWidget {
 	btnCopy.SetOnButtonClick(func(btn *ui.Button) {
 		ui.ClipboardSetText(c.generateUrl(c.unitId))
 	})
-	c.panelButtons.AddWidgetOnGrid(btnCopy, 1, 0)
+	c.panelButtons.AddWidgetOnGrid(btnCopy, 0, 1)
 
 	btnOpen := ui.NewButton("Open")
 	btnOpen.SetOnButtonClick(func(btn *ui.Button) {
 		utils.OpenURL(c.generateUrl(c.unitId))
 	})
-	c.panelButtons.AddWidgetOnGrid(btnOpen, 2, 0)
+	c.panelButtons.AddWidgetOnGrid(btnOpen, 0, 2)
 
 	c.panelContent = ui.NewPanel()
 	c.panelContent.SetXExpandable(true)
 	c.panelContent.SetYExpandable(true)
-	c.AddWidgetOnGrid(c.panelContent, 0, 1)
+	c.AddWidgetOnGrid(c.panelContent, 1, 0)
 
 	c.contentWidget = NewPageContentWidget()
 	c.panelContent.AddWidgetOnGrid(c.contentWidget, 0, 0)
