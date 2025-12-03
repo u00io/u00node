@@ -125,7 +125,7 @@ func (c *Unit) thWork() {
 	c.started = true
 	for !c.stoping {
 		c.iUnit.Tick()
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(500 * time.Millisecond)
 	}
 	c.started = false
 	c.stoping = false

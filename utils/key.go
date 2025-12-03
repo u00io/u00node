@@ -1,16 +1,16 @@
 package utils
 
 import (
-	"crypto/ed25519"
-	"encoding/hex"
+	"crypto/rand"
+	"crypto/sha3"
 )
 
 type Key struct {
-	PrivateKey []byte
-	PublicKey  []byte
+	PrivateKey string
+	PublicKey  string
 }
 
-func NewKeyFromPrivate(privateKey []byte) *Key {
+func NewKeyFromPrivate(privateKey string) *Key {
 	var c Key
 	c.PrivateKey = privateKey
 	return &c
@@ -18,28 +18,34 @@ func NewKeyFromPrivate(privateKey []byte) *Key {
 
 func NewKey() *Key {
 	var k Key
-	pubKey, privKey, _ := ed25519.GenerateKey(nil)
-	k.PrivateKey = privKey
-	k.PublicKey = pubKey
+
+	rnd := make([]byte, 16)
+	rand.Read(rnd)
+	k.PrivateKey = BytesToBase58(rnd)
+	pubKeyBytes := sha3.Sum256(rnd)
+	k.PublicKey = BytesToBase58(pubKeyBytes[:])
+
+	k.PrivateKey = "XtVyouvUnGwL3HdVdGUzn2"
+	k.PublicKey = "8PbWjEouhKFY2Pfra5tFAK"
 	return &k
 }
 
-func (c *Key) GetPrivateKey() []byte {
+func (c *Key) GetPrivateKey() string {
 	return c.PrivateKey
 }
 
-func (c *Key) GetPublicKey() []byte {
+func (c *Key) GetPublicKey() string {
 	return c.PublicKey
 }
 
-func (c *Key) SetPrivateKey(privateKey []byte) {
+func (c *Key) SetPrivateKey(privateKey string) {
 	c.PrivateKey = privateKey
 }
 
-func (c *Key) SetPublicKey(publicKey []byte) {
+func (c *Key) SetPublicKey(publicKey string) {
 	c.PublicKey = publicKey
 }
 
 func (c *Key) String() string {
-	return hex.EncodeToString(c.PublicKey)
+	return c.PublicKey
 }

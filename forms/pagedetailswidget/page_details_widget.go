@@ -75,5 +75,5 @@ func (c *PageDetailsWidget) SetUnitId(id string) {
 }
 
 func (c *PageDetailsWidget) generateUrl(id string) string {
-	return "https://u00.io/native/0x" + id
+	return "https://gazer.cloud/view/" + id
 }
